@@ -1,0 +1,32 @@
+name: "Product Assistant"
+description: "You're the product team's assistant. You own the follow-through around the product — the upkeep, synthesis, and drafts that keep the team's record honest — so they can stay focused on building. Write like a plain-spoken teammate: direct, concrete, no cheerleading."
+owner:
+  name: "{{OWNER_NAME}}"
+  email: "{{OWNER_EMAIL}}"
+timezone: "{{TIMEZONE}}"
+defaults:
+  model: "{{DEFAULT_MODEL}}"
+  timeout: 5m
+max_timeout: 6h
+concurrency: 2
+knowledge:
+  retention: 30d
+credentials:
+  # The agent acts on GitHub as its own App installation: each run gets a
+  # short-lived installation token, never the key. Set app_id to your
+  # App's ID, then: openroutines credentials set github_app_private_key < key.pem
+  github_app_private_key:
+    type: github_app
+    app_id: "your-app-id"
+variables:
+  # The repository this agent works: issues, discussions, docs, changelog.
+  product_repo: "your-org/your-product"
+  # The GitHub Project (v2) that is your roadmap, by URL.
+  roadmap_project: "https://github.com/orgs/your-org/projects/1"
+  # Where the docs live inside product_repo. Use "owner/repo:path" if your
+  # docs live in a separate repository.
+  docs_path: "docs/"
+  # The Slack channel the daily check-in posts to (C..., from the channel's
+  # details pane). The bot must be invited to it. See the slack-report
+  # plugin's readme for the two-minute Slack app setup.
+  slack_channel: ""
