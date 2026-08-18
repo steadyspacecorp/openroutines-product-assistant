@@ -1,3 +1,5 @@
+<img src="avatar.svg" alt="" width="96" align="right">
+
 An assistant for product teams, built on [OpenRoutines](https://openroutines.dev). It
 runs the loop your team knows it should run but never has time for:
 feedback in, roadmap current, docs true, shipped work told back to
@@ -19,6 +21,7 @@ update in Slack.
 | changelog | Turns shipped, customer-facing PRs into plain-language `CHANGELOG.md` entries, by PR, gated on the change actually being released. |
 | product-digest | Posts the week's state of the product — shipped, heard, roadmap, needs-a-decision — as a GitHub Discussion. |
 | slack-report | The agent's own daily check-in, posted to your Slack channel: what it did, what it will do, where it needs a human. |
+| slack-inbox | Answers replies in the check-in's thread. Ships inactive; needs the `channels:history` scope. |
 | support-sync | The trends lens pointed at your support tool. Ships inactive until you adapt the `support-desk` skill to Help Scout, Intercom, Zendesk, etc. |
 
 Each routine states its own boundary between what it fixes and what it
@@ -55,7 +58,8 @@ and about ten minutes.
 2. `openroutines configure` — fills in the owner, timezone, and model,
    and generates the `master.key` that encrypts credentials (back it up;
    it stays out of git).
-3. Set the variables in `openroutines.yml`: your product repository, your
+3. Set `repo` in `openroutines.yml` to your new repository's URL, then
+   set the variables: your product repository, your
    roadmap's GitHub Project URL, where the docs live — and the same repo
    in `routines/feedback-triage.md`'s trigger URL.
 4. GitHub, as an App — so the agent's PRs, comments, and commits are its
@@ -73,7 +77,10 @@ and about ten minutes.
    `.openroutines/plugins/slack-report/PLUGIN.md`, then
    `openroutines credentials set slack_bot_token`, invite the bot to your
    channel, and put the channel ID in the `slack_channel` variable.
-   Verify the wiring:
+   To let the agent answer thread replies, add `channels:history` to
+   the app's scopes, put the same channel ID in
+   `.openroutines/plugins/slack-report/routines/slack-inbox.md`'s trigger
+   URL, and set that routine `active: true`. Verify the wiring:
    `OPENROUTINES_LOG_LEVEL=warn openroutines routines run slack-verify --no-knowledge`
 6. `openroutines check`, commit, and
    [deploy](https://openroutines.dev/docs/deploying/).
