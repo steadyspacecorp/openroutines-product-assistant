@@ -81,7 +81,7 @@ and about ten minutes.
    the app's scopes, put the same channel ID in
    `.openroutines/plugins/slack-report/routines/slack-inbox.md`'s trigger
    URL, and set that routine `active: true`. Verify the wiring:
-   `OPENROUTINES_LOG_LEVEL=warn openroutines routines run slack-verify --no-knowledge`
+   `OPENROUTINES_LOG_LEVEL=warn openroutines routines run slack-verify`
 6. `openroutines check`, commit, and
    [deploy](https://openroutines.dev/docs/deploying/).
 
